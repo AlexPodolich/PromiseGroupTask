@@ -160,13 +160,37 @@ public class OrderService
             Console.WriteLine("Order sent to shipping. Waiting for shipment confirmation...");
 
             Thread.Sleep(5000); // Wait for 5 seconds
-            
+
             order.UpdateStatus(OrderStatus.Closed);
             Console.WriteLine("Order shipped successfully.");
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error sending order to shipping: {ex.Message}");
+        }
+    }
+
+    public void ViewOrders()
+    {
+        if (orders.Count == 0)
+        {
+            Console.WriteLine("No orders available.");
+            return;
+        }
+
+        Console.WriteLine("List of Orders:");
+        Console.WriteLine("============================================");
+
+        foreach (var order in orders)
+        {
+            Console.WriteLine($"Order ID: {order.Id}");
+            Console.WriteLine($"Product: {order.ProductName}");
+            Console.WriteLine($"Amount: {order.OrderAmount:C}");
+            Console.WriteLine($"Customer Type: {order.CustomerType}");
+            Console.WriteLine($"Delivery Address: {order.DeliveryAddress}");
+            Console.WriteLine($"Payment Method: {order.PaymentMethod}");
+            Console.WriteLine($"Status: {order.Status}");
+            Console.WriteLine("============================================");
         }
     }
 }
