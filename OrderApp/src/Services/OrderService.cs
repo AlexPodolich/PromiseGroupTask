@@ -120,4 +120,53 @@ public class OrderService
             Console.WriteLine($"Error creating order: {ex.Message}");
         }
     }
+
+    public void SendOrderToShipping()
+    {
+        try
+        {
+            Console.Write("Enter order ID to send to shipping: ");
+            // Validate ID
+            if (!int.TryParse(Console.ReadLine(), out int orderId))
+            {
+                Console.WriteLine("Invalid order ID. Please enter a valid integer.");
+                return;
+            }
+
+            // Find the order by ID
+            Order order = orders.Find(o => o.Id == orderId);
+            if (order == null)
+            {
+                Console.WriteLine("Order not found.");
+                return;
+            }
+
+            // Check if the order is already in shipping or shipped
+            if (order.Status == OrderStatus.InShipping || order.Status == OrderStatus.Closed)
+            {
+                Console.WriteLine("Order is already in shipping or has been shipped.");
+                return;
+            }
+
+            // Validate delivery address
+            if (string.IsNullOrWhiteSpace(order.DeliveryAddress))
+            {
+                Console.WriteLine("Order cannot be shipped without a delivery address.");
+                return;
+            }
+
+            // Send the order to shipping
+            order.UpdateStatus(OrderStatus.InShipping);
+            Console.WriteLine("Order sent to shipping. Waiting for shipment confirmation...");
+
+            Thread.Sleep(5000); // Wait for 5 seconds
+            
+            order.UpdateStatus(OrderStatus.Closed);
+            Console.WriteLine("Order shipped successfully.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error sending order to shipping: {ex.Message}");
+        }
+    }
 }
