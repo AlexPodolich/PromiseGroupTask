@@ -95,6 +95,13 @@ public class OrderService
                 return;
             }
 
+            // Check if the order is already in the warehouse
+            if (order.Status == OrderStatus.InWarehouse)
+            {
+                Console.WriteLine("Order is already in the warehouse.");
+                return;
+            }
+
             // Check if the order meets the business condition for cash on delivery
             if (order.PaymentMethod == PaymentMethod.CashOnDelivery && order.OrderAmount >= 2500)
             {

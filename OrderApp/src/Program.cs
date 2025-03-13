@@ -17,9 +17,9 @@
             string input = Console.ReadLine();
 
             // Check if the input is a valid option (1-8)
-            if (!int.TryParse(input, out int option) || option < 1 || option > 2)
+            if (!int.TryParse(input, out int option) || option < 1 || option > 3)
             {
-                Console.WriteLine("Invalid input! Enter a value between 1 and 2. Try again.");
+                Console.WriteLine("Invalid input! Enter a value between 1 and 3. Try again.");
                 Console.WriteLine();
                 continue;
             }
