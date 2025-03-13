@@ -75,4 +75,42 @@ public class OrderService
             Console.WriteLine($"Error creating order: {ex.Message}");
         }
     }
+
+    public void SendOrderToWarehouse(){
+        try
+        {
+            Console.Write("Enter order ID to send to warehouse: ");
+            // Validate ID
+            if (!int.TryParse(Console.ReadLine(), out int orderId))
+            {
+                Console.WriteLine("Invalid order ID. Please enter a valid integer.");
+                return;
+            }
+
+            // Find the order by ID
+            Order order = orders.Find(o => o.Id == orderId);
+            if (order == null)
+            {
+                Console.WriteLine("Order not found.");
+                return;
+            }
+
+            // Check if the order meets the business condition for cash on delivery
+            if (order.PaymentMethod == PaymentMethod.CashOnDelivery && order.OrderAmount >= 2500)
+            {
+                // Return the order to the customer
+                order.UpdateStatus(OrderStatus.ReturnedToCustomer);
+                Console.WriteLine("Order returned to customer due to cash on delivery with amount >= 2500.");
+            }
+            else
+            {
+                // Send the order to the warehouse
+                order.UpdateStatus(OrderStatus.InWarehouse);
+                Console.WriteLine("Order sent to warehouse.");
+            }
+        }catch (Exception ex)
+        {
+            Console.WriteLine($"Error creating order: {ex.Message}");
+        }
+    }
 }

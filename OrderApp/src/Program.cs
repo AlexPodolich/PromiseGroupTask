@@ -11,7 +11,8 @@
         {
             Console.WriteLine("Select what operation do you want to choose:");
             Console.WriteLine("1. Create a sample order");
-            Console.WriteLine("2. Exit");
+            Console.WriteLine("2. Send an order to warehouse");
+            Console.WriteLine("3. Exit");
 
             string input = Console.ReadLine();
 
@@ -28,6 +29,9 @@
                     orderService.CreateSampleOrder();
                     break;
                 case 2:
+                    orderService.SendOrderToWarehouse();
+                    break;
+                case 3:
                     return; // Exit the application
             }
 
