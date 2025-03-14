@@ -16,15 +16,17 @@
                 Console.WriteLine("2. Send an order to warehouse");
                 Console.WriteLine("3. Send an order to shipping");
                 Console.WriteLine("4. View Orders");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine("5. Apply Discount to an Order");
+                Console.WriteLine("6. Cancel an Order");
+                Console.WriteLine("7. Exit");
 
                 Console.Write($"Your choice: ");
                 string input = Console.ReadLine();
 
                 // Check if the input is a valid option
-                if (!int.TryParse(input, out int option) || option < 1 || option > 5)
+                if (!int.TryParse(input, out int option) || option < 1 || option > 7)
                 {
-                    Console.WriteLine("Invalid input! Enter a value between 1 and 5. Try again.");
+                    Console.WriteLine("Invalid input! Enter a value between 1 and 7. Try again.");
                     Console.WriteLine();
                     continue;
                 }
@@ -47,6 +49,14 @@
                         orderService.ViewOrders();
                         break;
                     case 5:
+                        Console.WriteLine("Preparing to apply discount to an order...");
+                        orderService.ApplyDiscountToOrder();
+                        break;
+                    case 6:
+                        Console.WriteLine("Preparing to cancel an order...");
+                        orderService.CancelOrder();
+                        break;
+                    case 7:
                         Console.WriteLine("Thanks for visiting! Goodbye!");
                         return; // Exit the application
                 }

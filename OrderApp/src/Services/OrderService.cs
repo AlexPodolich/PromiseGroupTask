@@ -196,6 +196,81 @@ namespace OrderApp
             }
         }
 
+        public void ApplyDiscountToOrder()
+        {
+            try
+            {
+                // Prompt for order ID
+                Console.Write("Enter the order ID to apply a discount: ");
+                if (!int.TryParse(Console.ReadLine(), out int orderId))
+                {
+                    Console.WriteLine("Invalid order ID. Please enter a valid integer.");
+                    return;
+                }
+
+                // Find the order by ID
+                Order order = orders.Find(o => o.Id == orderId);
+                if (order == null)
+                {
+                    Console.WriteLine("Order not found.");
+                    return;
+                }
+
+                // Prompt for discount amount
+                Console.Write("Enter the discount amount: ");
+                if (!decimal.TryParse(Console.ReadLine(), out decimal discountAmount))
+                {
+                    Console.WriteLine("Invalid discount amount. Please enter a valid decimal value.");
+                    return;
+                }
+
+                // Apply the discount
+                order.ApplyDiscount(discountAmount);
+                Console.WriteLine($"Discount of {discountAmount:C} applied to order ID {orderId}. New amount: {order.OrderAmount:C}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error applying discount: {ex.Message}");
+            }
+        }
+
+        public void CancelOrder()
+        {
+            try
+            {
+                // Prompt for order ID
+                Console.Write("Enter the order ID to cancel: ");
+                if (!int.TryParse(Console.ReadLine(), out int orderId))
+                {
+                    Console.WriteLine("Invalid order ID. Please enter a valid integer.");
+                    return;
+                }
+
+                // Find the order by ID
+                Order order = orders.Find(o => o.Id == orderId);
+                if (order == null)
+                {
+                    Console.WriteLine("Order not found.");
+                    return;
+                }
+
+                // Check if the order status is Closed
+                if (order.Status == OrderStatus.Closed)
+                {
+                    Console.WriteLine("Cannot cancel an order with status 'Closed'.");
+                    return;
+                }
+
+                // Remove the order from the list
+                orders.Remove(order);
+                Console.WriteLine($"Order ID {orderId} has been canceled and removed from the system.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error canceling order: {ex.Message}");
+            }
+        }
+
         public List<Order> GetOrders()
         {
             return orders;

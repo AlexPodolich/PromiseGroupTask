@@ -1,9 +1,12 @@
-public enum OrderStatus
+namespace OrderApp
 {
-    New,
-    InWarehouse,
-    InShipping,
-    ReturnedToCustomer,
-    Error,
-    Closed
+    public enum OrderStatus
+    {
+        New,
+        InWarehouse,
+        InShipping,
+        ReturnedToCustomer,
+        Error,
+        Closed
+    }
 }
